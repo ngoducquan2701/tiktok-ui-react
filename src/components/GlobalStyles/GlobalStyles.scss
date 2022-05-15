@@ -3,9 +3,12 @@
 
 :root {
     --primary-color: rgb(29 155 240);
+    --black: #000;
+    --text-color: #333;
+    
     // DefaultLayout
     --width-deault-layout: 1150px;
-    --height-header-deault-layout: 60px;
+    --height-header-deault-layout: 60px;   
 }
 
 * {
@@ -22,4 +25,17 @@ body {
     font-family: 'Roboto', sans-serif;
     font-size: 1.6rem;
     text-rendering: optimizeSpeed;
+    color: var(--text-color);
+}
+
+button,
+input,
+[tabindex] {
+    outline: none;
+    border: none;
+}
+
+a[href] {
+    color: var(--text-color);
+    text-decoration: none;
 }
