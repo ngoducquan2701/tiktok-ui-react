@@ -1,32 +1,33 @@
 import classNames from 'classnames/bind';
-import styles from './Button.module.scss';
 import { Link } from 'react-router-dom';
+import styles from './Button.module.scss';
+
+const cx = classNames.bind(styles);
 
 function Button({
     to,
     href,
-    text,
     primary = false,
     outline = false,
-    disabled = false,
+    text = false,
     rounded = false,
-    className = false,
-    small,
-    large,
+    disabled = false,
+    small = false,
+    large = false,
+    children,
+    className,
     leftIcon,
     rightIcon,
-    children,
     onClick,
     ...passProps
 }) {
-    const cx = classNames.bind(styles);
     let Comp = 'button';
     const props = {
         onClick,
         ...passProps,
     };
 
-    // Remove listener events
+    // Remove event listener when btn is disabled
     if (disabled) {
         Object.keys(props).forEach((key) => {
             if (key.startsWith('on') && typeof props[key] === 'function') {
@@ -49,9 +50,9 @@ function Button({
         outline,
         text,
         disabled,
+        rounded,
         small,
         large,
-        rounded,
     });
 
     return (
