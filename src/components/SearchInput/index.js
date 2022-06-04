@@ -7,25 +7,41 @@ import AccountItem from '~/components/AccountItem';
 import { SearchIcon } from '~/components/Icons';
 import classNames from 'classnames/bind';
 import styles from './SearchInput.module.scss';
+import { useDebounce } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
 function SearchInput() {
-    const [visible, setVisible] = useState([]);
-    const [searchShow, setSearchShow] = useState('');
+    const [searchShow, setSearchShow] = useState([]);
+    const [searchText, setSearchText] = useState('');
     const [showResults, setShowResults] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const debounced = useDebounce(searchText, 500);
 
     const inputRef = useRef();
 
     useEffect(() => {
-        setTimeout(() => {
-            setVisible([1, 2]);
-        }, 1000);
-    }, []);
+        if (!debounced.trim()) {
+            setSearchShow([]);
+            return;
+        }
+
+        setLoading(true);
+
+        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`)
+            .then((res) => res.json())
+            .then((res) => {
+                setSearchShow(res.data);
+                setLoading(false);
+            })
+            .catch(() => {
+                setLoading(false);
+            });
+    }, [debounced]);
 
     const handleClear = () => {
-        setSearchShow('');
-        setVisible([]);
+        setSearchText('');
+        setSearchShow([]);
         inputRef.current.focus();
     };
 
@@ -37,15 +53,14 @@ function SearchInput() {
         <div>
             <HeadlessTippy
                 interactive
-                visible={showResults && visible.length > 0}
+                visible={showResults && searchShow.length > 0}
                 render={(attrs) => (
                     <div className={cx('search-results')} tabIndex="-1" {...attrs}>
                         <PopperWrapper>
                             <h4 className={cx('search-accounts')}>Accounts</h4>
-                            <AccountItem />
-                            <AccountItem />
-                            <AccountItem />
-                            <AccountItem />
+                            {searchShow.map((item) => (
+                                <AccountItem key={item.id} data={item} />
+                            ))}
                         </PopperWrapper>
                     </div>
                 )}
@@ -53,21 +68,21 @@ function SearchInput() {
             >
                 <div className={cx('search')}>
                     <input
-                        value={searchShow}
+                        value={searchText}
                         ref={inputRef}
                         placeholder="Search accounts and videos"
                         spellCheck={false}
                         onChange={(e) => {
-                            setSearchShow(e.target.value);
+                            setSearchText(e.target.value);
                         }}
                         onFocus={() => setShowResults(true)}
                     />
-                    {!!searchShow && (
+                    {!!searchText && !loading && (
                         <button className={cx('clear')} onClick={handleClear}>
                             <FontAwesomeIcon icon={faCircleXmark} />
                         </button>
-                        /* <FontAwesomeIcon className={cx('loading')} icon={faSpinner} /> */
                     )}
+                    {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
 
                     <button className={cx('search-btn')}>
                         <SearchIcon />
