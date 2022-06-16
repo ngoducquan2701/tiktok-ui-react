@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import HeadlessTippy from '@tippyjs/react/headless';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { searchService } from '~/apiServices/searchServices';
+import { searchService } from '~/services/searchService';
 
 import { useDebounce } from '~/hooks';
 import styles from './SearchInput.module.scss';
