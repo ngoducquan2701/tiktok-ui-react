@@ -11,6 +11,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
+import { Link } from 'react-router-dom';
 
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
@@ -20,6 +21,7 @@ import Menu from '~/components/Popper/Menu';
 import { InboxIcon, MessageIcon, UploadIcon } from '~/components/Icons';
 import Image from '~/components/Images';
 import SearchInput from '~/components/SearchInput';
+import routesConfig from '~/config/routes';
 
 const MENU_ITEMS = [
     {
@@ -84,7 +86,9 @@ function Header() {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <img src={images.logo} alt="Tiktok" />
+                <Link to={routesConfig.home}>
+                    <img className={cx('logo')} src={images.logo} alt="Tiktok" />
+                </Link>
 
                 <SearchInput />
 
@@ -118,8 +122,8 @@ function Header() {
                         {currentUser ? (
                             <Image
                                 className={cx('user-avatar')}
-                                src="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/d5d7b58b1a7f01f757e6639d0f9aeb83~c5_100x100.jpeg?x-expires=1654412400&x-signature=LGZVEzqS9HF3iNGtFc3tnK%2Bb%2F%2F0%3D"
-                                alt="@hoaa"
+                                src="https://scontent.fdad3-1.fna.fbcdn.net/v/t39.30808-6/288310572_158166016729015_3684132102358704074_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=730e14&_nc_ohc=_dgG-d9K3UEAX9srsEn&_nc_ht=scontent.fdad3-1.fna&oh=00_AT_VWiUpKpu_TU2i8RlMRLK5nT3xFY6m9DjQEHfePhNpEA&oe=62AE310B"
+                                alt="Kid K"
                             />
                         ) : (
                             <p>

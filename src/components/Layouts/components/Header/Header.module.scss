@@ -3,8 +3,14 @@
     --search-height: 46px;
     --search-top-spacer: 9px;
     --search-button-width: 52px;
+    --font-family: 'ProximaNova', sans-serif;
 
     width: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: var(--white);
+    z-index: 10;
     display: flex;
     justify-content: center;
     box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
@@ -16,6 +22,10 @@
         align-items: center;
         justify-content: space-between;
         padding: 0 22px;
+
+        .logo {
+            display: flex;
+        }
     }
 }
 
@@ -55,7 +65,7 @@
     font-size: 1.4rem;
     font-weight: 600;
     color: var(--white);
-    font-family: 'ProximaNova', sans-serif;
+    font-family: var(--font-family);
     background-color: var(--primary-color);
 }
 
